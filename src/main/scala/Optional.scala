@@ -1,64 +1,75 @@
-package com.tkroman.kpi.y2022.l1
+package me.asdfa.postmortem.l1
 
-enum Optional[+A]:
-  case None
-  case Some(x: A)
-
-def fold[A, B](a: Optional[A], z: B, f: (B, A) => B) =
-  a match {
-    case Optional.None => z
-    case Optional.Some(x) => f(z, x)
-  }
-
-enum Tree[+A]:
-  case Branch(l: Tree[A], r: Tree[A])
-  case Leaf(a: A)
-
-enum Set[+A]:
-  case Empty
-  case NonEmpty private (a: A, rest: Set[A])
-object Set:
-  def makeSet[A](xs: A*): Set[A] = ???
-
-case class Bag[A] private (private val map: Map[A, Int])
-object Bag:
-  def makeBag[A](xs: A*): Bag[A] = ???
-
-// https://en.wikipedia.org/wiki/Binary_search_tree
-case class BSTree private (l: Option[BSTree], r: Option[BSTree], v: Int)
-object BSTree:
-  def makeBst(xs: Int*): BSTree = ???
+import scala.annotation.tailrec
 
 enum List[+A]:
   case Nil
-  case Cons(hd: A, tl: List[A])
+  case Cons(now: A, other: List[A])
 
-enum IntOpCode:
-  case Add, Mul
+//  @tailrec
+//  def allIndexes(xs: List[A], a: A): List[Int] =
+//    case List.Nil
+//    => new List[Int]
+//    case List.Cons(f, tl)
+//    => xs match
 
-enum BoolOpCode:
-  case And, Or
+//
+//  def allIndexesWhere(xs: List[A], pred: A => Boolean): List[Int] =
 
-enum IntExpr:
-  case Lit(n: Int)
-  case Op(opCode: IntOpCode, l: IntExpr, r: IntExpr)
+////
+//@tailrec
+//def zip3[A, B, C](xs: List[A], ys: List[B], zs: List[C]): List[(A, B, C)] =
+//  //чесно кажучи це якась дупа
+//  xs match
+//    case List.Nil =>
+//      ys match
+//        case List.Nil =>
+//          zs match
+//            case List.Nil => List.Nil
+//            case List.Cons(now, other) => List.Cons((List.Nil, List.Nil, now), zip3(List.Nil, List.Nil, other))
+//        case List.Cons(now, other) =>
+//          zs match
+//            case List.Nil => List.Cons((List.Nil, now, List.Nil), zip3(List.Nil, other, List.Nil))
+//            case List.Cons(now1, other1) => List.Cons((List.Nil, now, now1), zip3(List.Nil, other, other1))
+//    case List.Cons(now, other) =>
+//      ys match
+//        case List.Nil =>
+//          zs match
+//            case List.Nil => List.Cons((now, List.Nil, List.Nil), zip3(other, List.Nil, List.Nil))
+//            case List.Cons(now2, other2) => List.Cons((now, List.Nil, now2), zip3(other, List.Nil, other2))
+//        case List.Cons(now1, other1) =>
+//          zs match
+//            case List.Nil => List.Cons((now, now1, List.Nil), zip3(other, other1, List.Nil))
+//            case List.Cons(now2, other2) => List.Cons((now, now1, now2), zip3(other, other1, other2))
 
-enum BoolExpr:
-  case Lit(b: Boolean)
-  case Op(opCode: BoolOpCode, l: BoolExpr, r: BoolExpr)
+def zip3[A, B, C](xs: List[A], ys: List[B], zs: List[C]): List[(A, B, C)] =
+  xs match
+    case List.Nil => List.Nil
+    case List.Cons(now, other) =>
+      ys match
+        case List.Nil => List.Nil
+        case List.Cons(now1, other1) =>
+          zs match
+            case List.Nil => List.Nil
+            case List.Cons(now2, other2) => List.Cons((now, now1, now2), zip3(other, other1, other2))
 
-enum Nat:
-  case Zero
-  case Succ(n: Nat)
 
-case class Rational(num: Int, denom: Int)
 
-enum Compared:
-  case Lt, Gt, Eq // < > =
+//def unzip3(xs: List[(A, B, C)]): (List[A], List[B], List[C]) =
 
-enum RecEntry[A]:
-  case Flat(a: A)
-  case Nested(as: List[RecEntry[A]])
+
+
+def toString(xs: List[Char]): String =
+    xs match
+      case List.Nil => ""
+      case List.Cons(now: Char, other: List[Char]) => "".+:(now).+(toString(other))
+
+
+def join(xs: List[String], separator: String): String =
+    xs match
+      case List.Nil => ""
+      case List.Cons(now, other) => now + separator + join(other, separator) // вже відчуваю сепаратор в самому кінці, що здаєця не треба...
+
 
 // NOTE: do not use this to demo the results.
 // Use unit-tests instead

@@ -21,7 +21,6 @@ def allIndexes[A](xs: List[A], a: A): List[Int] =
   F(xs, a, 0)
 
 
-
 def allIndexesWhere[A](xs: List[A], pred: A => Boolean): List[Int] =
   def F[A](x: List[A], pr: A => Boolean, buf: Int): List[Int] =
     x match

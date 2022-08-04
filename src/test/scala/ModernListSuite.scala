@@ -8,7 +8,7 @@ class ModernListSuite extends FunSuite {
     val actual = allIndexes(List.Cons(1, List.Cons(2, List.Cons(3, List.Cons(4, List.Cons(1, List.Cons(5, List.Cons(6, List.Nil))))))), 1)
     assertEquals(actual, expected)
   }
-  test("allIndexes of >5 on [1,2,3,4,1,5,6]") {
+  test("allIndexesWhere of >5 on [1,2,3,4,1,5,6]") {
     val notexpected = List.Cons(5, List.Nil)
     val expected = List.Cons(6, List.Nil)
     val actual = allIndexesWhere(List.Cons(1, List.Cons(2, List.Cons(3, List.Cons(4, List.Cons(1, List.Cons(5, List.Cons(6, List.Nil))))))), x => x > 5)
@@ -25,12 +25,12 @@ class ModernListSuite extends FunSuite {
     val actual = unzip3(List.Cons((1, 4, 7), List.Cons((2, 5, 8), List.Cons((3, 6, 9), List.Nil))))
     assertEquals(actual, expected)
   }
-  test("toString on [a,2,;]"){
+  test("toString on [a,2,;]") {
     val expected = "a2;"
     val actual = me.asdfa.postmortem.l1.toString(List.Cons('a', List.Cons('2', List.Cons(';', List.Nil))))
     assertEquals(actual, expected)
   }
-  test("join on [\"1a\", \"vg\", \";eo\"], separator = \"0\""){
+  test("join on [\"1a\", \"vg\", \";eo\"], separator = \"0\"") {
     val expected = "1a0vg0;eo0"
     val actual = join(List.Cons("1a", List.Cons("vg", List.Cons(";eo", List.Nil))), "0")
     assertEquals(actual, expected)
